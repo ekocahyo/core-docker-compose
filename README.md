@@ -10,7 +10,7 @@
 - volume-mysql
 
 # Networks
-- PROJECTNAME_core-network
+- core_core-network
 
 # How to deploy
-`docker-compose up -d`
+`docker-compose up -d -p core`
