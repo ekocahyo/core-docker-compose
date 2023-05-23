@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+
+  adminer:
+    image: adminer
+    restart: no
+    networks:
+      - core-network
+    ports:
+      - 8080:8080
+
+  postgres:
+    image: postgres:15.3-alpine
+    hostname: core-postgres
+    restart: no
+    volumes:
+      - volume-postgres:/var/lib/postgresql/data
+    networks:
+      - core-network
+    environment:
+      POSTGRES_USER: userpostgres
+      POSTGRES_PASSWORD: 36b6BtSCzW^6
+
+  mysql:
+    image: mysql:8.0
+    hostname: core-mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: no
+    volumes:
+      - volume-mysql:/var/lib/mysql
+    networks:
+      - core-network
+    environment:
+      MYSQL_ROOT_PASSWORD: 36b6BtSCzW^6
+      MYSQL_USER: usermysql
+      MYSQL_PASSWORD: 36b6BtSCzW^6
+
+  redis:
+    image: redis:7-alpine
+    hostname: core-redis
+    restart: no
+    networks:
+      - core-network
+
+  mailhog:
+    image: mailhog/mailhog
+    hostname: core-mailhog
+
+volumes:
+
+  volume-postgres:
+    driver: local
+
+  volume-mysql:
+    driver: local
+
+networks:
+
+  core-network:
+    driver: bridge
